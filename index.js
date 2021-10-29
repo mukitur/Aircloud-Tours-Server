@@ -22,10 +22,16 @@ async function run(){
         const database = client.db("AirCloudTours");
         const servicesCollection = database.collection('services');
 
+        //GET API 
+        app.get('/services', async (req, res) =>{
+            const cursor = servicesCollection.find({});
+            const services = await cursor.toArray();
+            res.send(services);
+        });
+
         //POST API
         app.post('/services', async (req, res) =>{
             const service = req.body;
-           // console.log('hitting the api', service);
             const result = await servicesCollection.insertOne(service);
             console.log(result);
             res.send(result)
