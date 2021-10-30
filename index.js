@@ -36,7 +36,7 @@ async function run(){
            const service = await servicesCollection.findOne(query);
             res.json(service);
         });
-        
+
         //Get Orders
         app.get('/orders', async (req, res) =>{
             const cursor = ordersCollection.find({});
@@ -66,9 +66,6 @@ async function run(){
     }
 }
 run().catch(console.dir);
-
-//U:  AirCloudTours
-//P:  uOVBNI5RJqsGVS48
 
 app.get ('/', (req, res) =>{
     res.send('AirCloud Tours - Node Server running');
