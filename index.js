@@ -21,6 +21,7 @@ async function run(){
         console.log('DB connected')
         const database = client.db("AirCloudTours");
         const servicesCollection = database.collection('services');
+        const ordersCollection = database.collection('orders');
 
         //GET API 
         app.get('/services', async (req, res) =>{
@@ -35,11 +36,27 @@ async function run(){
            const service = await servicesCollection.findOne(query);
             res.json(service);
         });
+        
+        //Get Orders
+        app.get('/orders', async (req, res) =>{
+            const cursor = ordersCollection.find({});
+            const result = await cursor.toArray();
+            res.send(result);
+        });
 
         //POST API
         app.post('/services', async (req, res) =>{
             const service = req.body;
             const result = await servicesCollection.insertOne(service);
+            console.log(result);
+            res.send(result)
+        });
+
+        //Add Orders POST API
+        app.post('/orders', async (req, res) =>{
+            const order = req.body;
+            //console.log('order processing', order);
+            const result = await ordersCollection.insertOne(order);
             console.log(result);
             res.send(result)
         });
