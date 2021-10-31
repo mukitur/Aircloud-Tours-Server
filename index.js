@@ -36,7 +36,7 @@ async function run(){
            const service = await servicesCollection.findOne(query);
             res.json(service);
         });
-
+        
         //Get Orders
         app.get('/orders', async (req, res) =>{
             const cursor = ordersCollection.find({});
@@ -60,6 +60,13 @@ async function run(){
             console.log(result);
             res.send(result)
         });
+        // DELETE API
+        app.delete('/deleteorders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id:ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            res.json(result);
+        })
     }
     finally{
         //await client.close();
